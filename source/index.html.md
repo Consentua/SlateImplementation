@@ -9,7 +9,8 @@ language_tabs:
   - python: Python
   - java: Java
   - go: Go
-toc_footers: []
+toc_footers:
+  - <a href='https://consentua.com'>Get Consentua</a>
 includes: []
 search: true
 highlight_theme: darkula

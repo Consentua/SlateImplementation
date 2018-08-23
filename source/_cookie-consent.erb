@@ -1,0 +1,229 @@
+<section id="cookie-consent">
+<style>
+    @-webkit-keyframes animatetop {
+    0% {
+      top: -300px;
+      opacity: 0;
+      -webkit-transform: rotate(-10deg);
+              transform: rotate(-10deg);
+    }
+    80% {
+      top: 20px;
+    }
+    100% {
+      top: 0;
+      opacity: 1;
+      -webkit-transform: rotate(0deg);
+              transform: rotate(0deg);
+    }
+  }
+
+  @keyframes animatetop {
+    0% {
+      top: -200vh;
+      opacity: 0;
+      -webkit-transform: rotate(-10deg);
+              transform: rotate(-10deg);
+    }
+    80% {
+      top: 20px;
+    }
+    100% {
+      top: 0;
+      opacity: 1;
+      -webkit-transform: rotate(0deg);
+              transform: rotate(0deg);
+    }
+  }
+
+  @keyframes animateout {
+    0% {
+      top: 0;
+      opacity: 1;
+      -webkit-transform: rotate(0deg);
+              transform: rotate(0deg);
+    }
+    100% {
+      top: 200vh;
+    }
+  }
+
+  @-webkit-keyframes animatefade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes animatefade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+     #cookie-consent {
+    /* display: none; */
+    visibility: hidden;
+    position: fixed;
+    z-index: 40;
+    top: -200vh;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: none;
+    background-color: rgba(55, 55, 55, 0.61);
+    -webkit-animation-name: animatefade;
+            animation-name: animatefade;
+    -webkit-animation-duration: 0.4s;
+            animation-duration: 0.4s;
+  }
+
+  #cookie-consent #consent {
+    max-height: 90vh;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: -200vh;
+    padding-bottom: 0.5rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+    background-color: #fff;
+    border-radius: 1.3rem;
+    /* -webkit-box-shadow: inset 0 0 9px black;
+            box-shadow: inset 0 0 9px black; */
+    text-align: center;
+    /* -webkit-animation-name: animatetop; */
+            /* animation-name: animatetop; */
+    -webkit-animation-duration: 0.6s;
+            animation-duration: 0.6s;
+  }
+  #consentua-cookie-widget{
+      border: none;
+  }
+.btn {
+    font-family: 'Roboto', 'FontAwesome';
+    display: inline-block;
+    padding: 0.8rem;
+    color: var(--white-2-color, #F6F6F6);
+    border: 1px solid var(--white-2-color, #F6F6F6);
+    -webkit-transition: 200ms;
+    transition: 200ms;
+    background: transparent;
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: 5px;
+    min-width: 80px;
+    text-align: center;
+    margin: 0.2rem;
+}
+  .btn.btn-grey {
+    color: var(--dark-2-color, #212121);
+    background: var(--grey-color, #eee);
+    border-color: var(--grey-color, #eee);
+}
+  #consent .btn{
+    margin: 0.7rem;
+  }
+  @media only screen and (min-width: 550px), screen and (min-height: 660px) {
+    #consent{
+    min-width: 320px;
+    max-width: 60vw;
+    max-height: 80vh;
+    margin: 1rem auto;
+  }
+  }
+</style>
+<div id="consent">
+<iframe  id="consentua-cookie-widget" src=""></iframe>
+<button class="btn btn-grey" onclick="closeCookieModal()">No Thanks</button>
+</div>
+</section>
+
+<script>
+    var openCookieModal = function(e) {
+      document.getElementById('cookie-consent').style.visibility = "visible";
+      document.getElementById('cookie-consent').style.top = 0;
+      document.getElementById('consent').style.animationName = "animatetop";
+      document.getElementById('consent').style.top = 0;
+    }
+    
+    var closeCookieModal = function(e) {
+      document.getElementById('cookie-consent').style.visibility = "hidden";
+      document.getElementById('cookie-consent').style.top = "-200vh";
+      document.getElementById('consent').style.animationName = "animateout";
+      document.getElementById('consent').style.top = "-200vh";
+    }
+    
+    var isConsented = function(e) {
+      //user consented, do stuff:      
+      // set google analytics cookie
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-74260509-3');
+      gtag('set', {'user_id': cuid}); // Set the user ID
+      window.setTimeout(function() {
+        //wait 950ms before modal close, for animations to finish
+        document.getElementById('cookie-consent').style.visibility = "hidden";
+        document.getElementById('cookie-consent').style.top = "-200vh";
+        document.getElementById('consent').style.animationName = "animateout";
+        document.getElementById('consent').style.top = "-200vh";
+      }, 950);
+    }
+
+    var ccid = '1'; // Customer ID
+    var csid = '25'; // Consentua service ID
+    var cskey = '4d58ba73-1dec-4724-b040-df0b0caf38c5'; // Consentua service key
+    var ctid = '1000001'; // Template ID
+    var cuid = false;
+    var ccb_ready = function (msg) {
+        //When consentua is ready open/dont open modal
+        console.log('UID is:' + msg.message.uid);
+        cuid = msg.message.uid;
+        let cooki = Cookies.getJSON('consents') || {};
+        if (!cooki["313"]) {
+          openCookieModal();
+        } else{
+          isConsented();
+        }
+    };
+    var ccb_set = function (msg) {
+        //update cookie when consent is set
+        console.log("Consent received from Consentua", msg);
+        let c = msg.message.consents || {};
+        Cookies.set('consents', c);
+        Cookies.set('cuid', cuid)
+        if (c["313"]) {
+          isConsented();
+        }
+    };
+    var ciframe = document.getElementById('consentua-cookie-widget');
+    var ccwrap = new ConsentuaUIWrapper(ciframe, ccid, cuid, ctid, csid, cskey, function () {} , 'en', {ix: 'https://kni-test-node.herokuapp.com/custom-interaction.html'});
+    // set cb
+    ccwrap.onset = ccb_set;
+    ccwrap.onready = ccb_ready;
+    // close modal on modal bg click
+    window.onclick = function (e) {
+      if (e.target == document.getElementById('cookie-consent')) {
+        closeCookieModal();
+      }
+    }
+</script>

@@ -30,7 +30,9 @@ under the License.
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title><%= current_page.data.title || "API Documentation" %></title>
-
+    <script src="https://websdk.consentua.com/websdk/consentua-embed.js.php"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74260509-3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
     <style>
       <%= Rouge::Themes::MonokaiSublime.render(:scope => '.highlight') %>
     </style>
@@ -50,6 +52,7 @@ under the License.
         <%= image_tag('navbar.png') %>
       </span>
     </a>
+        <%= partial "cookie-consent" %>
     <div class="toc-wrapper">
       <%= image_tag "logo.png", class: 'logo' %>
       <% if language_tabs.any? %>
